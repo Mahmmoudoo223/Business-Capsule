@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "637018212643",
+    "project_id": "life-course-84b4d",
+    "storage_bucket": "life-course-84b4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637018212643:android:83a39a8a5911066c45a496",
+        "android_client_info": {
+          "package_name": "com.mahmoud.course_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637018212643-0c18l820qak8ln89i34aqv7j4j5rpp9l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mahmoud.course_app",
+            "certificate_hash": "c0e7aeaefdac20b13dc2ed605c86866d022a239d"
+          }
+        },
+        {
+          "client_id": "637018212643-r9vk8efs8entl8855iuknc8v8rncjtjg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWbUZf0FJny0yY1uGbywIRTh4gKEk1WSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637018212643-r9vk8efs8entl8855iuknc8v8rncjtjg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

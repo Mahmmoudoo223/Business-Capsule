@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Life course</string>
+    <string name="facebook_app_id">1531743594009548</string>
+    <string name="fb_login_protocol_scheme">fb1531743594009548</string>
+    <string name="facebook_client_token">19c1d1eab71a7c5bbf7f2ad41693ea63</string>
+
+
+
+</resources>
