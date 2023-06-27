@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   percent_indicator: ^4.2.2
   clipboard: ^0.1.3
-  get_storage:
+  get_storage: ^2.0.3
   get: ^4.6.5
   avatar_view: ^1.0.1
   lottie: ^1.4.2
@@ -48,9 +48,10 @@ dependencies:
   cloud_firestore: ^3.4.6
   shared_preferences: ^2.0.15
   better_video_player: ^1.2.8
-  webview_flutter:
+  webview_flutter: ^3.0.3
   flutter_inappwebview: ^5.4.3+7
   youtube_player_flutter: ^8.1.0
+  flutter_pdfview: ^1.2.5
   firebase_storage: ^10.3.8
   flutter_windowmanager: ^0.2.0
   internet_connection_checker: ^0.0.1+4
@@ -58,6 +59,7 @@ dependencies:
   url_launcher: ^6.1.5
   toggle_switch: ^2.0.1
   onesignal_flutter: ^3.4.1
+  file: ^6.1.4
   # flutter_pdfview: ^1.1.0
   typed_data: ^1.3.2
   flutter_launcher_icons: ^0.11.0

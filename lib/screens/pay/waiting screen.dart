@@ -91,11 +91,13 @@ class _PostsScreenState extends State<WaitingScreen> {
                                 Container(
                                   height: 60,
                                   width: 100,
-                                  child: RaisedButton(
-                                    color: Color.fromARGB(255, 116, 27, 27),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color.fromARGB(255, 116, 27, 27),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(10)),
+                                    ),
                                     onPressed: () {
                                       //   if (controller.codeModel[index].codes.contains(code.text.toString())) {
                                       if (posts['pay'] == true &&

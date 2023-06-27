@@ -173,10 +173,12 @@ class VodafoneCash extends StatelessWidget {
                           //   alignment: Alignment.center,
                           width: 180,
                           height: 60,
-                          child: RaisedButton(
-                              color: Color.fromARGB(255, 116, 27, 27),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromARGB(255, 116, 27, 27),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15)),
+                              ),
                               child: Text(
                                 "38".tr,
                                 style: TextStyle(

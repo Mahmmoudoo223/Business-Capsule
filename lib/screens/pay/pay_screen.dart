@@ -135,10 +135,12 @@ class _PayScreenState extends State<PayScreen> {
             Container(
               height: 50,
               width: 120,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
-                color: Color.fromARGB(255, 116, 27, 27),
+                backgroundColor: Color.fromARGB(255, 116, 27, 27),
+                ),
                 onPressed: () async {
                   Get.to(VodafoneCash(
                     email: e,
