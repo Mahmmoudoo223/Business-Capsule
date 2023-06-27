@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_app/models/course_model.dart';
 import 'package:course_app/resources/color_manager.dart';
 import 'package:course_app/screens/courses/material.dart';
 import 'package:course_app/screens/home/my_courses.dart';
@@ -16,10 +17,17 @@ class MyCoursesScreen extends StatefulWidget {
 }
 
 class _PostsScreenState extends State<MyCoursesScreen> {
+  List<String> coursesIDs = [];
+  bool isfetching = true;
+  @override
+  void initState(){
+    // TODO: implement initState
+    super.initState();
+    getSubscriptions();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final box = GetStorage();
-    String e = box.read('email') ?? "x";
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -40,11 +48,11 @@ class _PostsScreenState extends State<MyCoursesScreen> {
             child: Column(children: [
               SizedBox(height: 30),
               Flexible(
-                  child: StreamBuilder(
+                  child:isfetching?Center(child: Text('Loading')):coursesIDs.isNotEmpty?
+                  StreamBuilder(
                       stream: FirebaseFirestore.instance
-                          .collection('pay')
-                          .where('studentemail', isEqualTo: e)
-                          .where('active', isEqualTo: true)
+                          .collection('Corssess')
+                          .where('id', whereIn: coursesIDs)
                           .snapshots(),
                       builder:
                           (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -56,72 +64,7 @@ class _PostsScreenState extends State<MyCoursesScreen> {
                             return new Text('Loading...');
                           default:
                             if (snapshot.data!.docs.length == 0)
-                              return Container(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Center(
-                                      child: Image.asset(
-                                        "assets/images/no page .png",
-                                        height: 300,
-                                        width: 500,
-                                      ),
-                                    ),
-                                    // Text(
-                                    //   "33".tr,
-                                    //   style: TextStyle(
-                                    //       fontSize: 30,
-                                    //       color: Colors.indigo[900],
-                                    //       fontWeight: FontWeight.bold),
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 10,
-                                    // ),
-                                    // Text(
-                                    //   "49".tr,
-                                    //   style: TextStyle(
-                                    //       fontSize: 18,
-                                    //       color: Colors.grey,
-                                    //       fontWeight: FontWeight.bold),
-                                    // ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    // Padding(
-                                    //   padding: const EdgeInsets.symmetric(
-                                    //       horizontal: 40),
-                                    //   child: InkWell(
-                                    //     onTap: () {
-                                    //       Get.to(BottomBar());
-                                    //     },
-                                    //     child: Container(
-                                    //       alignment: Alignment.center,
-                                    //       height: 55,
-                                    //       decoration: BoxDecoration(
-                                    //           color: Color.fromARGB(
-                                    //               255, 187, 186, 186),
-                                    //           borderRadius:
-                                    //               BorderRadius.circular(15),
-                                    //           boxShadow: [
-                                    //             BoxShadow(
-                                    //               color: Colors.black
-                                    //                   .withOpacity(0.1),
-                                    //               blurRadius: 10,
-                                    //             ),
-                                    //           ]),
-                                    //       child: Text(
-                                    //         "34".tr,
-                                    //         style: TextStyle(
-                                    //             color: Colors.white,
-                                    //             fontWeight: FontWeight.w700,
-                                    //             fontSize: 20),
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                              );
+                              return EmptyList();
 
                             return ListView.builder(
                               itemCount: snapshot.data!.docs.length,
@@ -134,8 +77,8 @@ class _PostsScreenState extends State<MyCoursesScreen> {
                                   child: InkWell(
                                     onTap: () {
                                       Get.to(MaterialScreen(
-                                          cat: posts['course'],
-                                          doctor: posts['doctorname']));
+                                          courseModel: CourseModel.fromFirestore(posts),
+                                          haveSubscription: true,));
 
                                       // Get.to(MaterialScreen(
                                       //     doctor: posts["name"],
@@ -201,7 +144,7 @@ class _PostsScreenState extends State<MyCoursesScreen> {
                                                 width: 180,
                                                 child: Column(children: [
                                                   Custom_Text(
-                                                    text: posts['course'],
+                                                    text: posts['name'],
                                                     fontSize: 18,
                                                   ),
                                                   Divider(
@@ -235,7 +178,102 @@ class _PostsScreenState extends State<MyCoursesScreen> {
                               // ),
                             );
                         }
-                      }))
+                      }):EmptyList())
             ])));
   }
+  
+  Future<void> getSubscriptions() async{
+    try {
+      setState(() {
+        isfetching=true;
+      });
+      final box = GetStorage();
+      String e = box.read('email') ?? "x";
+      QuerySnapshot querySnapshot=  await FirebaseFirestore.instance
+            .collection('subscriptions')
+            .where("email", isEqualTo: e)
+            .get();
+      querySnapshot.docs.forEach((doc) {
+        coursesIDs.add(doc['courseID']);
+      });
+      setState(() {
+        isfetching=false;
+      });
+    } catch (e) {
+      setState(() {
+        isfetching=false;
+      });
+      print('Error getting subscriptions from Firestore: $e');
+      //rethrow;
+    }
+  }
+}
+
+Widget EmptyList() {
+   return Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Center(
+                                      child: Image.asset(
+                                        "assets/images/no page .png",
+                                        height: 300,
+                                        width: 500,
+                                      ),
+                                    ),
+                                    // Text(
+                                    //   "33".tr,
+                                    //   style: TextStyle(
+                                    //       fontSize: 30,
+                                    //       color: Colors.indigo[900],
+                                    //       fontWeight: FontWeight.bold),
+                                    // ),
+                                    // SizedBox(
+                                    //   height: 10,
+                                    // ),
+                                    // Text(
+                                    //   "49".tr,
+                                    //   style: TextStyle(
+                                    //       fontSize: 18,
+                                    //       color: Colors.grey,
+                                    //       fontWeight: FontWeight.bold),
+                                    // ),
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    // Padding(
+                                    //   padding: const EdgeInsets.symmetric(
+                                    //       horizontal: 40),
+                                    //   child: InkWell(
+                                    //     onTap: () {
+                                    //       Get.to(BottomBar());
+                                    //     },
+                                    //     child: Container(
+                                    //       alignment: Alignment.center,
+                                    //       height: 55,
+                                    //       decoration: BoxDecoration(
+                                    //           color: Color.fromARGB(
+                                    //               255, 187, 186, 186),
+                                    //           borderRadius:
+                                    //               BorderRadius.circular(15),
+                                    //           boxShadow: [
+                                    //             BoxShadow(
+                                    //               color: Colors.black
+                                    //                   .withOpacity(0.1),
+                                    //               blurRadius: 10,
+                                    //             ),
+                                    //           ]),
+                                    //       child: Text(
+                                    //         "34".tr,
+                                    //         style: TextStyle(
+                                    //             color: Colors.white,
+                                    //             fontWeight: FontWeight.w700,
+                                    //             fontSize: 20),
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                              );
 }

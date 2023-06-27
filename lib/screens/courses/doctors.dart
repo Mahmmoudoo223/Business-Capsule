@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_app/models/course_model.dart';
 import 'package:course_app/resources/color_manager.dart';
 import 'package:course_app/screens/courses/material.dart';
 import 'package:course_app/screens/pay/pay_screen.dart';
@@ -53,8 +54,8 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
               Flexible(
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance
-                          .collection('doctors')
-                          .where('course', isEqualTo: widget.course)
+                          .collection('Corssess')
+                          .where('name', isEqualTo: widget.course)
                           .snapshots(),
                       builder:
                           (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -69,19 +70,23 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
                               itemBuilder: (BuildContext context, int index) {
                                 DocumentSnapshot posts =
                                     snapshot.data!.docs[index];
+                                CourseModel currentCourse = CourseModel.fromFirestore(posts);
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20, right: 12),
                                   child: InkWell(
                                     onTap: () {
-                                      Get.to(
-                                        WaitingScreen(
-                                          doctorname: posts['name'],
-                                          price: posts['price'],
-                                          image: posts['image'],
-                                          course: posts['course'],
-                                        ),
-                                      );
+                                      Get.to(MaterialScreen(
+                                          courseModel: currentCourse));
+                                      // Get.to(
+                                      //   WaitingScreen(
+                                      //     doctorname: posts['name'],
+                                      //     price: posts['price'],
+                                      //     image: posts['image'],
+                                      //     course: posts['course'],
+                                      //     courseID: posts.id,
+                                      //   ),
+                                      // );
                                       // Get.to(MaterialScreen(
                                       //     doctor: posts["name"],
                                       //     cat: posts["course"]));
@@ -133,8 +138,7 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
                                                             10.0),
                                                     image: DecorationImage(
                                                         fit: BoxFit.fill,
-                                                        image: NetworkImage(
-                                                            posts["image"]))),
+                                                        image: _getImage(currentCourse))),
                                               ),
                                             ),
                                           ),
@@ -146,7 +150,7 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
                                                 width: 180,
                                                 child: Column(children: [
                                                   Custom_Text(
-                                                    text: posts["name"],
+                                                    text: currentCourse.doctorname??"Unkown Doctor",
                                                     fontSize: 18,
                                                   ),
                                                   Divider(
@@ -156,8 +160,8 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
                                                     height: 5,
                                                   ),
                                                   Custom_Text(
-                                                    text:
-                                                        posts["price"] + " L.E",
+                                                    text:currentCourse.price!=null?
+                                                        currentCourse.price.toString()+"56".tr:"Unkown",
                                                     fontSize: 15,
                                                     color: Colors.grey,
                                                   ),
@@ -177,5 +181,18 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
                         }
                       }))
             ])));
+  }
+  
+  _getImage(CourseModel currentCourse) {
+    try{
+      if(currentCourse.image != null)
+        return NetworkImage(currentCourse.image!);
+      else
+        return AssetImage("assets/images/pdf.png");
+
+    }catch(e){
+      print("_getImage Throw");
+      return AssetImage("assets/images/profile.png");
+    }
   }
 }

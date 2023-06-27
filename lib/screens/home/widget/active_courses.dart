@@ -50,15 +50,15 @@ class ActiveCourses extends StatelessWidget {
                                   child: InkWell(
                                     onTap: () {
 
-                                      Get.to
-                                        (
-                                          WaitingScreen(
-                                              doctorname: controller.categoriesModel[index].doctorname,
-                                              price: controller.categoriesModel[index].price,
-                                              image:   controller.categoriesModel[index].image,
-                                              course:  controller.categoriesModel[index].name
-                                          )
-                                      );
+                                      // Get.to
+                                      //   (
+                                      //     WaitingScreen(
+                                      //         doctorname: controller.categoriesModel[index].doctorname,
+                                      //         price: controller.categoriesModel[index].price,
+                                      //         image:   controller.categoriesModel[index].image,
+                                      //         course:  controller.categoriesModel[index].name
+                                      //     )
+                                      // );
 
                                       // Get.to(MaterialScreen(
                                       //   course: controller
@@ -194,15 +194,15 @@ class ActiveCourses extends StatelessWidget {
                         ),
                         onTap: () {
 
-                          Get.to
-                            (
-                              WaitingScreen(
-                                doctorname: controller.bestCourseModel[index].doctorname,
-                                price: controller.bestCourseModel[index].price,
-                                image:   controller.bestCourseModel[index].image,
-                                course:  controller.bestCourseModel[index].name
-                              )
-                          );
+                          // Get.to
+                          //   (
+                          //     WaitingScreen(
+                          //       doctorname: controller.bestCourseModel[index].doctorname,
+                          //       price: controller.bestCourseModel[index].price,
+                          //       image:   controller.bestCourseModel[index].image,
+                          //       course:  controller.bestCourseModel[index].name
+                          //     )
+                          // );
                           print("ee" +
                               controller.bestCourseModel[index].doctorname);
                           print("ee" + controller.bestCourseModel[index].name);

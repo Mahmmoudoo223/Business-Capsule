@@ -1,19 +1,22 @@
+import 'package:course_app/models/course_model.dart';
 import 'package:course_app/resources/color_manager.dart';
 import 'package:course_app/resources/strings_manager.dart';
+import 'package:course_app/screens/courses/section.dart';
 import 'package:course_app/view_model/material_view_model.dart';
-import 'package:course_app/widgets/pdfs_widget.dart';
-import 'package:course_app/widgets/videos_widget.dart';
+import 'package:course_app/screens/videos/videos_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class MaterialScreen extends GetWidget<MaterialViewModel> {
-  String doctor, cat;
+  CourseModel courseModel;
+  bool haveSubscription;
 
-  MaterialScreen({required this.doctor, required this.cat});
+  MaterialScreen({required this.courseModel,this.haveSubscription=false});
 
   @override
   Widget build(BuildContext context) {
+    print(courseModel.toString());
     MaterialViewModel controller = MaterialViewModel();
 
     return Scaffold(
@@ -55,7 +58,7 @@ class MaterialScreen extends GetWidget<MaterialViewModel> {
                   height: 20,
                 ),
                 Text(
-                  cat,
+                  courseModel.name??"Unkown Course",
                   style: TextStyle(
                       fontSize: 24,
                       color: ColorManager.white,
@@ -65,7 +68,7 @@ class MaterialScreen extends GetWidget<MaterialViewModel> {
                   height: 5,
                 ),
                 Text(
-                  doctor,
+                  courseModel.doctorname??"Unkown Doctor",
                   style: TextStyle(
                       fontSize: 22,
                       color: ColorManager.white,
@@ -110,21 +113,17 @@ class MaterialScreen extends GetWidget<MaterialViewModel> {
                   color: Colors.white,
                   borderRadius:
                       BorderRadius.only(topRight: Radius.circular(70))),
-              child: Column(children: [
-                SizedBox(
-                  height: 10,
-                ),
-                // if (controller.activeToggledIndex == 0)
-                //   PdfWidget(
-                //     cat: cat,
-                //     doctor: doctor,
-                //   ),
-                if (controller.activeToggledIndex == 1)
-                  VideoWidget(
-                    cat: cat,
-                    doctor: doctor,
+              child: SingleChildScrollView(
+                child: Column(children: [
+                  SizedBox(
+                    height: 10,
                   ),
-              ]),
+                  if (controller.activeToggledIndex == 0)
+                    SectionWidget(courseModel: courseModel,type: SectionType.pdf,haveSubscription:haveSubscription),
+                  if (controller.activeToggledIndex == 1)
+                    SectionWidget(courseModel: courseModel,type: SectionType.video,haveSubscription:haveSubscription)
+                ]),
+              ),
             )),
           ],
         ),
