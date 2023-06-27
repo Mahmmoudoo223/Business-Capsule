@@ -62,25 +62,28 @@ class _PostsScreenState extends State<MyCoursesScreen> {
                                   children: [
                                     Center(
                                       child: Image.asset(
-                                        "assets/images/life course2.png",
-                                        height: 250,
-                                        width: 250,
+                                        "assets/images/no page .png",
+                                        height: 300,
+                                        width: 500,
                                       ),
-
-                                      // Text(
-                                      //   "My Courses",
-                                      //   style: TextStyle(
-                                      //       fontSize: 25,
-                                      //       color: ColorManager.black,
-                                      //       fontWeight: FontWeight.bold),
-                                      // ),
                                     ),
-                                    Text(
-                                      "33".tr,
-                                      style: TextStyle(
-                                          fontSize: 23,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                                    // Text(
+                                    //   "33".tr,
+                                    //   style: TextStyle(
+                                    //       fontSize: 30,
+                                    //       color: Colors.indigo[900],
+                                    //       fontWeight: FontWeight.bold),
+                                    // ),
+                                    // SizedBox(
+                                    //   height: 10,
+                                    // ),
+                                    // Text(
+                                    //   "49".tr,
+                                    //   style: TextStyle(
+                                    //       fontSize: 18,
+                                    //       color: Colors.grey,
+                                    //       fontWeight: FontWeight.bold),
+                                    // ),
                                     SizedBox(
                                       height: 30,
                                     ),

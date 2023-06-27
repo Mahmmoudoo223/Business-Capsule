@@ -38,7 +38,7 @@ class MyLocal implements Translations {
           "26": "الصفحة الرئيسية",
           "27": "المفضلة",
           "28": "دوراتي",
-          "29": "البروفايل",
+          "29": "بروفايل",
           "30": "اختـار اللغة",
           "31": "العـربية",
           "32": "الانجليـزيـة",
@@ -58,6 +58,7 @@ class MyLocal implements Translations {
           "46": "تحقق مما إذا كانت هذه الدورة متاحة لك أم لا",
           "47": "اشترك",
           "48": "بحث",
+          "49": "اكتشف الدورات",
         },
         "en": {
           "1": "Hello",
@@ -92,7 +93,7 @@ class MyLocal implements Translations {
           "30": "Choose Language",
           "31": "Arabic",
           "32": "English",
-          "33": "Empty",
+          "33": "Page Not Found ",
           "34": "Explore Course",
           "35": "Dont\'t have an account? ",
           "36": "Sign up",
@@ -109,6 +110,7 @@ class MyLocal implements Translations {
           "46": "Check if this course available for you or not",
           "47": "Pay",
           "48": "Search",
+          "49": "Explour Courses",
         },
       };
 }

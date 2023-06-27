@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void initTimer() async {
     if (await checkinternet()) {
-      Timer(Duration(seconds: 4), () {
+      Timer(Duration(seconds: 6), () {
         Get.off(ControleView());
       });
     } else {}
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: Lottie.asset("assets/images/11793-books-stack.json"),
+      splash: Lottie.asset("assets/images/final caps (1).json"),
       nextScreen: FutureBuilder(
           future: checkinternet(),
           builder: (BuildContext c, snap) {

@@ -6,7 +6,7 @@
     <!-- <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/> -->
         
     <application
-        android:label="Life Course"
+        android:label="Business capsule"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
