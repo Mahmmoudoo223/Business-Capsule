@@ -51,7 +51,7 @@ class CourseModel {
     Map data = doc.data() as Map<String, dynamic>;
 
     return CourseModel(
-      id: data['id'],
+      id: doc.id,
       doctorname: data['doctorname'],
       image: data['image'],
       isFeatured: data['isFeatured'],

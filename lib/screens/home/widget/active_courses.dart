@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_app/constants/colors.dart';
+import 'package:course_app/models/course_model.dart';
+import 'package:course_app/models/enrolled_courses_list.dart';
 import 'package:course_app/models/home_view_model.dart';
 import 'package:course_app/screens/home/widget/category_titel.dart';
 import 'package:course_app/screens/home/widget/levels_slider.dart';
@@ -49,7 +52,8 @@ class ActiveCourses extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width * .4,
                                   child: InkWell(
                                     onTap: () {
-
+                                          Get.to(MaterialScreen(
+                                          courseModel: controller.categoriesModel[index],));
                                       // Get.to
                                       //   (
                                       //     WaitingScreen(
@@ -68,7 +72,7 @@ class ActiveCourses extends StatelessWidget {
                                       // ));
                                     },
                                     child: Image.network(
-                                      controller.categoriesModel[index].image,
+                                      controller.categoriesModel[index].image??"",
                                       fit: BoxFit.cover,
                                     ),
                                   )),
@@ -78,7 +82,7 @@ class ActiveCourses extends StatelessWidget {
                             ),
 
                             Text(
-                              controller.categoriesModel[index].name,
+                              controller.categoriesModel[index].name??"Unkown",
                               style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
@@ -89,7 +93,7 @@ class ActiveCourses extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              controller.categoriesModel[index].doctorname,
+                              controller.categoriesModel[index].doctorname??"Unkown",
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.grey,
@@ -100,7 +104,7 @@ class ActiveCourses extends StatelessWidget {
                               height: 7,
                             ),
                             Text(
-                              controller.categoriesModel[index].price + " L.E",
+                              controller.categoriesModel[index].price !=null?controller.categoriesModel[index].price.toString()+"56".tr:"",
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.grey,
@@ -151,7 +155,7 @@ class ActiveCourses extends StatelessWidget {
                                     width:
                                         MediaQuery.of(context).size.width * .4,
                                     child: Image.network(
-                                      controller.bestCourseModel[index].image,
+                                      controller.bestCourseModel[index].image??"",
                                       fit: BoxFit.fill,
                                     )),
                               ),
@@ -159,7 +163,7 @@ class ActiveCourses extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                controller.bestCourseModel[index].name,
+                                controller.bestCourseModel[index].name??"Unkown",
                                 style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.black,
@@ -170,7 +174,7 @@ class ActiveCourses extends StatelessWidget {
                                 height: 5,
                               ),
                               Text(
-                                controller.bestCourseModel[index].doctorname,
+                                controller.bestCourseModel[index].doctorname??"Unkown",
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.grey,
@@ -181,8 +185,7 @@ class ActiveCourses extends StatelessWidget {
                                 height: 7,
                               ),
                               Text(
-                                controller.bestCourseModel[index].price +
-                                    " L.E",
+                                controller.bestCourseModel[index].price !=null?controller.bestCourseModel[index].price.toString()+"56".tr:"",
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.grey,
@@ -192,8 +195,9 @@ class ActiveCourses extends StatelessWidget {
                             ],
                           ),
                         ),
-                        onTap: () {
-
+                        onTap: () async{
+                          Get.to(MaterialScreen(
+                                          courseModel: controller.bestCourseModel[index],));
                           // Get.to
                           //   (
                           //     WaitingScreen(
@@ -203,9 +207,9 @@ class ActiveCourses extends StatelessWidget {
                           //       course:  controller.bestCourseModel[index].name
                           //     )
                           // );
-                          print("ee" +
-                              controller.bestCourseModel[index].doctorname);
-                          print("ee" + controller.bestCourseModel[index].name);
+                          // print("ee" +
+                          //     controller.bestCourseModel[index].doctorname);
+                          // print("ee" + controller.bestCourseModel[index].name);
 
                           // Get.to(MaterialScreen(
                           //     doctor:

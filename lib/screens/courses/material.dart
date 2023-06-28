@@ -10,9 +10,8 @@ import 'package:toggle_switch/toggle_switch.dart';
 
 class MaterialScreen extends GetWidget<MaterialViewModel> {
   CourseModel courseModel;
-  bool haveSubscription;
 
-  MaterialScreen({required this.courseModel,this.haveSubscription=false});
+  MaterialScreen({required this.courseModel});
 
   @override
   Widget build(BuildContext context) {
@@ -119,9 +118,9 @@ class MaterialScreen extends GetWidget<MaterialViewModel> {
                     height: 10,
                   ),
                   if (controller.activeToggledIndex == 0)
-                    SectionWidget(courseModel: courseModel,type: SectionType.pdf,haveSubscription:haveSubscription),
+                    SectionWidget(courseModel: courseModel,type: SectionType.pdf),
                   if (controller.activeToggledIndex == 1)
-                    SectionWidget(courseModel: courseModel,type: SectionType.video,haveSubscription:haveSubscription)
+                    SectionWidget(courseModel: courseModel,type: SectionType.video)
                 ]),
               ),
             )),

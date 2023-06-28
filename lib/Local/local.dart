@@ -65,7 +65,7 @@ class MyLocal implements Translations {
           "53": "دكتور الدورة",
           "54": "السعر",
           "55": "الخصم",
-          "56": "جنيه",
+          "56": " جنيه",
           "57": "تفعيل",
         },
         "en": {
@@ -125,7 +125,7 @@ class MyLocal implements Translations {
           "53": "Course Doctor",
           "54": "Price",
           "55": "Discount",
-          "56": "L.E",
+          "56": " L.E",
           "57": "Apply",
         },
       };

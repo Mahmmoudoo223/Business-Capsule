@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_app/models/course_model.dart';
+import 'package:course_app/models/enrolled_courses_list.dart';
 import 'package:course_app/screens/pdfs/pdfs_widget.dart';
 import 'package:course_app/screens/videos/videos_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,12 @@ import 'package:flutter/src/widgets/placeholder.dart';
 class SectionWidget extends StatelessWidget {
   CourseModel courseModel;
   SectionType type;
-  bool haveSubscription;
-
-  SectionWidget({required this.courseModel,required this.type,this.haveSubscription=false});
+  bool haveSubscription=false;
+  SectionWidget({required this.courseModel,required this.type});
 
   @override
   Widget build(BuildContext context) {
+    haveSubscription = EnrolledCourses.list.contains(courseModel.id);
      return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('courses sections')

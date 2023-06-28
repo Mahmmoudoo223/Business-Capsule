@@ -77,19 +77,7 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
                                   child: InkWell(
                                     onTap: () {
                                       Get.to(MaterialScreen(
-                                          courseModel: currentCourse));
-                                      // Get.to(
-                                      //   WaitingScreen(
-                                      //     doctorname: posts['name'],
-                                      //     price: posts['price'],
-                                      //     image: posts['image'],
-                                      //     course: posts['course'],
-                                      //     courseID: posts.id,
-                                      //   ),
-                                      // );
-                                      // Get.to(MaterialScreen(
-                                      //     doctor: posts["name"],
-                                      //     cat: posts["course"]));
+                                          courseModel: currentCourse,));
                                     },
                                     child: Container(
                                       height: 180,

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_app/models/course_model.dart';
+import 'package:course_app/models/enrolled_courses_list.dart';
 import 'package:course_app/resources/color_manager.dart';
 import 'package:course_app/screens/courses/material.dart';
 import 'package:course_app/screens/home/my_courses.dart';
@@ -17,13 +18,13 @@ class MyCoursesScreen extends StatefulWidget {
 }
 
 class _PostsScreenState extends State<MyCoursesScreen> {
-  List<String> coursesIDs = [];
+  List<CourseModel> myCourses = [];
   bool isfetching = true;
   @override
   void initState(){
     // TODO: implement initState
     super.initState();
-    getSubscriptions();
+    getMyCourses();
   }
 
   @override
@@ -48,11 +49,11 @@ class _PostsScreenState extends State<MyCoursesScreen> {
             child: Column(children: [
               SizedBox(height: 30),
               Flexible(
-                  child:isfetching?Center(child: Text('Loading')):coursesIDs.isNotEmpty?
+                  child:isfetching?Center(child: Text('Loading')):EnrolledCourses.list.isNotEmpty?
                   StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('Corssess')
-                          .where('id', whereIn: coursesIDs)
+                          .where('id', whereIn: EnrolledCourses.list)
                           .snapshots(),
                       builder:
                           (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -77,8 +78,7 @@ class _PostsScreenState extends State<MyCoursesScreen> {
                                   child: InkWell(
                                     onTap: () {
                                       Get.to(MaterialScreen(
-                                          courseModel: CourseModel.fromFirestore(posts),
-                                          haveSubscription: true,));
+                                          courseModel: CourseModel.fromFirestore(posts)));
 
                                       // Get.to(MaterialScreen(
                                       //     doctor: posts["name"],
@@ -182,23 +182,29 @@ class _PostsScreenState extends State<MyCoursesScreen> {
             ])));
   }
   
-  Future<void> getSubscriptions() async{
+  Future<void> getMyCourses() async{
     try {
-      setState(() {
+      if(EnrolledCourses.list.isNotEmpty){
+        setState(() {
         isfetching=true;
       });
-      final box = GetStorage();
-      String e = box.read('email') ?? "x";
-      QuerySnapshot querySnapshot=  await FirebaseFirestore.instance
-            .collection('subscriptions')
-            .where("email", isEqualTo: e)
-            .get();
-      querySnapshot.docs.forEach((doc) {
-        coursesIDs.add(doc['courseID']);
+      List<CourseModel> res = [];
+      EnrolledCourses.list.forEach((element) async{
+        if(element.isNotEmpty){
+          DocumentSnapshot courseDoc =
+          await FirebaseFirestore.instance.collection('Corssess').doc(element).get();
+
+      // parse the user document into a UserModel object
+        CourseModel courseModel = CourseModel.fromFirestore(courseDoc);
+        res.add(courseModel);
+        }
+
       });
       setState(() {
+        myCourses = res;
         isfetching=false;
       });
+      }
     } catch (e) {
       setState(() {
         isfetching=false;
