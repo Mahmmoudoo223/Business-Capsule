@@ -52,27 +52,40 @@ class _BottomBarState extends State<BottomBar> {
       body: Center(
         child: widgetList[myIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          showUnselectedLabels: false,
-          elevation: 0,
-          selectedItemColor: Colors.red,
-          unselectedItemColor: Colors.grey,
-          backgroundColor: Color(0xFFDAEFE8),
-          type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            setState(() {
-              myIndex = index;
-            });
-          },
-          currentIndex: myIndex,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "26".tr),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.search_outlined), label: "48".tr),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.school_outlined), label: "28".tr),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "29".tr),
-          ]),
+      bottomNavigationBar: _getBTMNavigationBar(context),
+    );
+  }
+  
+  _getBTMNavigationBar(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+         gradient: LinearGradient(
+              colors: [Colors.red, Colors.blue],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+      ),
+      child: BottomNavigationBar(
+            showUnselectedLabels: false,
+            elevation: 0,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.grey,
+            backgroundColor: Colors.transparent,
+            type: BottomNavigationBarType.fixed,
+            onTap: (index) {
+              setState(() {
+                myIndex = index;
+              });
+            },
+            currentIndex: myIndex,
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "26".tr),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.search_outlined), label: "48".tr),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.school_outlined), label: "28".tr),
+              BottomNavigationBarItem(icon: Icon(Icons.person), label: "29".tr),
+            ]),
     );
   }
 }
