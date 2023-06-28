@@ -61,7 +61,7 @@ class MyLocal implements Translations {
           "49": "اكتشف الدورات",
         },
         "en": {
-          "1": "Hello",
+          "1": "Hello,",
           "2": "Sign in to your account",
           "3": "Enter your Email",
           "4": "Enter your password",

@@ -85,8 +85,9 @@ class _VideoWidgetState extends State<VideoWidget> {
                                               child: Text(
                                                 posts["name"],
                                                 style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black),
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black87),
                                               ),
                                             )
                                           ],

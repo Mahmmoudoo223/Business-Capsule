@@ -36,6 +36,11 @@ class ActiveCourses extends StatelessWidget {
                           children: [
                             Container(
                               decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                        controller.categoriesModel[index].image,
+                                      ),
+                                      fit: BoxFit.cover),
                                   borderRadius: BorderRadius.circular(16),
                                   color: Colors.grey.shade100,
                                   boxShadow: [
@@ -49,16 +54,16 @@ class ActiveCourses extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width * .4,
                                   child: InkWell(
                                     onTap: () {
-
-                                      Get.to
-                                        (
-                                          WaitingScreen(
-                                              doctorname: controller.categoriesModel[index].doctorname,
-                                              price: controller.categoriesModel[index].price,
-                                              image:   controller.categoriesModel[index].image,
-                                              course:  controller.categoriesModel[index].name
-                                          )
-                                      );
+                                      Get.to(WaitingScreen(
+                                          doctorname: controller
+                                              .categoriesModel[index]
+                                              .doctorname,
+                                          price: controller
+                                              .categoriesModel[index].price,
+                                          image: controller
+                                              .categoriesModel[index].image,
+                                          course: controller
+                                              .categoriesModel[index].name));
 
                                       // Get.to(MaterialScreen(
                                       //   course: controller
@@ -67,16 +72,15 @@ class ActiveCourses extends StatelessWidget {
                                       //       .categoriesModel[index].doctorname,
                                       // ));
                                     },
-                                    child: Image.network(
-                                      controller.categoriesModel[index].image,
-                                      fit: BoxFit.cover,
-                                    ),
+                                    // child: Image.network(
+
+                                    //   fit: BoxFit.cover,
+                                    // ),
                                   )),
                             ),
                             SizedBox(
                               height: 10,
                             ),
-
                             Text(
                               controller.categoriesModel[index].name,
                               style: TextStyle(
@@ -86,7 +90,7 @@ class ActiveCourses extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(
-                              height: 5,
+                              height: 2,
                             ),
                             Text(
                               controller.categoriesModel[index].doctorname,
@@ -97,7 +101,7 @@ class ActiveCourses extends StatelessWidget {
                               textAlign: TextAlign.left,
                             ),
                             SizedBox(
-                              height: 7,
+                              height: 2,
                             ),
                             Text(
                               controller.categoriesModel[index].price + " L.E",
@@ -138,22 +142,28 @@ class ActiveCourses extends StatelessWidget {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                          controller
+                                              .bestCourseModel[index].image,
+                                        ),
+                                        fit: BoxFit.cover),
                                     borderRadius: BorderRadius.circular(16),
                                     color: Colors.grey.shade100,
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.2),
-                                        blurRadius: 8,
+                                        blurRadius: 4,
                                       )
                                     ]),
                                 child: Container(
-                                    height: 220,
-                                    width:
-                                        MediaQuery.of(context).size.width * .4,
-                                    child: Image.network(
-                                      controller.bestCourseModel[index].image,
-                                      fit: BoxFit.fill,
-                                    )),
+                                  height: 220,
+                                  width: MediaQuery.of(context).size.width * .4,
+                                  // child: Image.network(
+
+                                  //   fit: BoxFit.fill,
+                                  // )
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
@@ -167,7 +177,7 @@ class ActiveCourses extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                               SizedBox(
-                                height: 5,
+                                height: 2,
                               ),
                               Text(
                                 controller.bestCourseModel[index].doctorname,
@@ -178,7 +188,7 @@ class ActiveCourses extends StatelessWidget {
                                 textAlign: TextAlign.left,
                               ),
                               SizedBox(
-                                height: 7,
+                                height: 2,
                               ),
                               Text(
                                 controller.bestCourseModel[index].price +
@@ -193,16 +203,12 @@ class ActiveCourses extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-
-                          Get.to
-                            (
-                              WaitingScreen(
-                                doctorname: controller.bestCourseModel[index].doctorname,
-                                price: controller.bestCourseModel[index].price,
-                                image:   controller.bestCourseModel[index].image,
-                                course:  controller.bestCourseModel[index].name
-                              )
-                          );
+                          Get.to(WaitingScreen(
+                              doctorname:
+                                  controller.bestCourseModel[index].doctorname,
+                              price: controller.bestCourseModel[index].price,
+                              image: controller.bestCourseModel[index].image,
+                              course: controller.bestCourseModel[index].name));
                           print("ee" +
                               controller.bestCourseModel[index].doctorname);
                           print("ee" + controller.bestCourseModel[index].name);

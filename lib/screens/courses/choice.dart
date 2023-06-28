@@ -34,7 +34,7 @@ class ChoiceScreen extends StatelessWidget {
           ),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFDAEFE8),
       body: Center(
         child: Column(
           children: [

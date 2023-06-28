@@ -20,7 +20,7 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFDAEFE8),
         appBar: AppBar(
           toolbarHeight: 50,
           elevation: 0,
@@ -87,7 +87,11 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
                                       //     cat: posts["course"]));
                                     },
                                     child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
                                       height: 180,
+                                      width: 350,
                                       child: Stack(
                                         children: [
                                           Positioned(
@@ -97,10 +101,10 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
                                                   height: 180,
                                                   width: 350,
                                                   decoration: BoxDecoration(
-                                                      color: Colors.white,
+                                                      color: Colors.grey[100],
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              0.0),
+                                                              20),
                                                       boxShadow: [
                                                         BoxShadow(
                                                           color: Colors.grey
