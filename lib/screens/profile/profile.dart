@@ -41,9 +41,9 @@ class ProfileHome extends StatelessWidget {
                 // "mmmmmm",
                 //controller.userModel!.email ??"",
                 style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey,
-                ),
+                    fontSize: 15,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold),
               )
             ],
           ),
@@ -102,33 +102,66 @@ class ProfileMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(20),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          backgroundColor: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+      child: InkWell(
+        onTap: press,
+        child: AnimatedContainer(
+          margin: EdgeInsets.only(left: 25, right: 25),
+          alignment: Alignment.center,
+          width: 400,
+          height: 55,
+          duration: Duration(milliseconds: 200),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            gradient: LinearGradient(colors: [Colors.red, Colors.blue]),
           ),
-          onPressed: press,
-          child: Row(
-            children: [
-              SvgPicture.asset(icon, width: 22, color: Colors.black),
-              SizedBox(width: 20),
-              Expanded(
-                  child: Text(
-                text,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400),
-              )),
-              Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.grey,
-              )
-            ],
-          )),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Row(
+              children: [
+                SvgPicture.asset(icon, width: 22, color: Colors.white),
+                SizedBox(width: 20),
+                Expanded(
+                    child: Text(
+                  text,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                )),
+                Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+      // FlatButton(
+      //     padding: EdgeInsets.all(20),
+      //     shape:
+      //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      //     color: Colors.blue,
+      //     onPressed: press,
+      //     child: Row(
+      //       children: [
+      //         SvgPicture.asset(icon, width: 22, color: Colors.black),
+      //         SizedBox(width: 20),
+      //         Expanded(
+      //             child: Text(
+      //           text,
+      //           style: TextStyle(
+      //               fontSize: 16,
+      //               color: Colors.black,
+      //               fontWeight: FontWeight.w400),
+      //         )),
+      //         Icon(
+      //           Icons.arrow_forward_ios,
+      //           color: Colors.grey,
+      //         )
+      //       ],
+      //     )),
     );
   }
 }

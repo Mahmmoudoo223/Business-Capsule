@@ -31,7 +31,7 @@ class _PostsScreenState extends State<MyCoursesScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFDAEFE8),
         // appBar: AppBar(
         //   elevation: 0,
         //   // backgroundColor: Colors.red,
@@ -45,7 +45,7 @@ class _PostsScreenState extends State<MyCoursesScreen> {
         //   centerTitle: true,
         // ),
         body: Container(
-            color: Colors.white38,
+            color: Color(0xFFDAEFE8),
             child: Column(children: [
               SizedBox(height: 30),
               Flexible(
@@ -95,7 +95,7 @@ class _PostsScreenState extends State<MyCoursesScreen> {
                                                   height: 180,
                                                   width: 350,
                                                   decoration: BoxDecoration(
-                                                      color: Colors.white,
+                                                      color: Colors.grey[100],
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               0.0),

@@ -39,6 +39,11 @@ class ActiveCourses extends StatelessWidget {
                           children: [
                             Container(
                               decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                        controller.categoriesModel[index].image??"",
+                                      ),
+                                      fit: BoxFit.cover),
                                   borderRadius: BorderRadius.circular(16),
                                   color: Colors.grey.shade100,
                                   boxShadow: [
@@ -71,16 +76,15 @@ class ActiveCourses extends StatelessWidget {
                                       //       .categoriesModel[index].doctorname,
                                       // ));
                                     },
-                                    child: Image.network(
-                                      controller.categoriesModel[index].image??"",
-                                      fit: BoxFit.cover,
-                                    ),
+                                    // child: Image.network(
+
+                                    //   fit: BoxFit.cover,
+                                    // ),
                                   )),
                             ),
                             SizedBox(
                               height: 10,
                             ),
-
                             Text(
                               controller.categoriesModel[index].name??"Unkown",
                               style: TextStyle(
@@ -90,7 +94,7 @@ class ActiveCourses extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(
-                              height: 5,
+                              height: 2,
                             ),
                             Text(
                               controller.categoriesModel[index].doctorname??"Unkown",
@@ -101,7 +105,7 @@ class ActiveCourses extends StatelessWidget {
                               textAlign: TextAlign.left,
                             ),
                             SizedBox(
-                              height: 7,
+                              height: 2,
                             ),
                             Text(
                               controller.categoriesModel[index].price !=null?controller.categoriesModel[index].price.toString()+"56".tr:"",
@@ -142,22 +146,28 @@ class ActiveCourses extends StatelessWidget {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                          controller
+                                              .bestCourseModel[index].image??"",
+                                        ),
+                                        fit: BoxFit.cover),
                                     borderRadius: BorderRadius.circular(16),
                                     color: Colors.grey.shade100,
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.2),
-                                        blurRadius: 8,
+                                        blurRadius: 4,
                                       )
                                     ]),
                                 child: Container(
-                                    height: 220,
-                                    width:
-                                        MediaQuery.of(context).size.width * .4,
-                                    child: Image.network(
-                                      controller.bestCourseModel[index].image??"",
-                                      fit: BoxFit.fill,
-                                    )),
+                                  height: 220,
+                                  width: MediaQuery.of(context).size.width * .4,
+                                  // child: Image.network(
+
+                                  //   fit: BoxFit.fill,
+                                  // )
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
@@ -171,7 +181,7 @@ class ActiveCourses extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                               SizedBox(
-                                height: 5,
+                                height: 2,
                               ),
                               Text(
                                 controller.bestCourseModel[index].doctorname??"Unkown",
@@ -182,7 +192,7 @@ class ActiveCourses extends StatelessWidget {
                                 textAlign: TextAlign.left,
                               ),
                               SizedBox(
-                                height: 7,
+                                height: 2,
                               ),
                               Text(
                                 controller.bestCourseModel[index].price !=null?controller.bestCourseModel[index].price.toString()+"56".tr:"",

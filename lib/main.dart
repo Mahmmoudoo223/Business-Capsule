@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'ads/ads_screen.dart';
 import 'helper/binding.dart';
 import 'models/home_view_model.dart';
 import 'view_model/auth_view_model.dart';

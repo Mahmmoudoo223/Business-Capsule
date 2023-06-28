@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFDAEFE8),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,14 +64,17 @@ class _HomePageState extends State<HomePage> {
   AppBar _buildAppBar() {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFDAEFE8),
       elevation: 0,
       centerTitle: false,
-      title: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: Text(
-          "1".tr,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+      title: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text(
+            "1".tr,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 22, color: Colors.grey),
+          ),
         ),
       ),
       actions: [
@@ -100,5 +103,14 @@ class _HomePageState extends State<HomePage> {
   void launcherWhatsapp(@required phone, @required msg) async {
     String url = 'whatsapp://send?phone=$phone&text=$msg';
     await canLaunch(url) ? launch(url) : launch(url);
+  }
+}
+
+class AppBAr extends StatelessWidget {
+  const AppBAr({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

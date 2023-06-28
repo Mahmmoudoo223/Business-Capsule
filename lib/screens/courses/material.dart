@@ -45,7 +45,7 @@ class MaterialScreen extends GetWidget<MaterialViewModel> {
                         Get.back();
                       },
                       child: Icon(
-                        Icons.arrow_back_ios,
+                        Icons.arrow_back,
                         size: 20,
                         color: Colors.white,
                       ),
@@ -109,7 +109,7 @@ class MaterialScreen extends GetWidget<MaterialViewModel> {
             Expanded(
                 child: Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color(0xFFDAEFE8),
                   borderRadius:
                       BorderRadius.only(topRight: Radius.circular(70))),
               child: SingleChildScrollView(

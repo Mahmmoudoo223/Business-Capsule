@@ -13,7 +13,7 @@ class ProfileScreen extends StatelessWidget {
     return GetBuilder<ProfileViewModel>(
       init: ProfileViewModel(),
       builder: (controller) => Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xFFDAEFE8),
           body: SingleChildScrollView(
             child: Column(
               children: [

@@ -10,14 +10,14 @@ class Language extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFDAEFE8),
         elevation: 0,
         title: Text("30".tr),
         titleTextStyle: TextStyle(color: Colors.black, fontSize: 18),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFDAEFE8),
       body: LanguageBody(),
     );
   }

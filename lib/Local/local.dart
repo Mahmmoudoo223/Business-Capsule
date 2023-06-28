@@ -69,7 +69,7 @@ class MyLocal implements Translations {
           "57": "تفعيل",
         },
         "en": {
-          "1": "Hello",
+          "1": "Hello,",
           "2": "Sign in to your account",
           "3": "Enter your Email",
           "4": "Enter your password",

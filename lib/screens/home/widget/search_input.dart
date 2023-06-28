@@ -80,9 +80,9 @@ class _SearchInputState extends State<SearchInput> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFDAEFE8),
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xFFDAEFE8),
           elevation: 0,
           title: CupertinoSearchTextField(controller: _searchController),
         ),
