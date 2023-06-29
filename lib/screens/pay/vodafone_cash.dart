@@ -1,5 +1,7 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_app/models/course_model.dart';
+import 'package:course_app/models/promocode_model.dart';
 import 'package:course_app/screens/home/widget/Bottom_bar.dart';
 import 'package:course_app/widgets/custom_formfield.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,37 +10,66 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../widgets/custom_text.dart';
 
-class VodafoneCash extends StatelessWidget {
-  String email, course, price, doctorname, image;
-
-  List coursex;
+class VodafoneCash extends StatefulWidget {
+  String email;
+  CourseModel courseModel;
+  double total;
+  double? discount;
+  PromoCodeModel? promoCodeModel;
 
   VodafoneCash({
     required this.email,
-    required this.course,
-    required this.price,
-    required this.image,
-    required this.doctorname,
-    required this.coursex,
+    required this.courseModel,
+    required this.total,
+    required this.discount,
+    required this.promoCodeModel,
   });
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  @override
+  State<VodafoneCash> createState() => _VodafoneCashState();
 
-  bool press = true;
+  static bool isEgyptianPhoneNumber(String phone) {
+    return isNumeric(phone) &&
+        phone.length == 11 &&
+        phone.startsWith(RegExp(r'(011|012|010)'));
+  }
+  static bool isNumeric(String? value) {
+    if (value == null) {
+      return false;
+    }
+    return double.tryParse(value) == null ? false : true;
+  }
+}
+
+class _VodafoneCashState extends State<VodafoneCash> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController numController = TextEditingController();
+  bool enableBTN=false;
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController();
+    //TextEditingController nameController = TextEditingController();
     //TextEditingController  moneyController=TextEditingController();
-    TextEditingController numController = TextEditingController();
 
     return Scaffold(
+      backgroundColor: Color(0xFFDAEFE8),
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.grey,
-        toolbarHeight: 1,
-      ),
-      backgroundColor: Colors.white,
+          toolbarHeight: 50,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(0)),
+              gradient: LinearGradient(
+                colors: [Colors.red, Colors.blue],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+        ),
       body: SingleChildScrollView(
         child: Padding(
             padding: EdgeInsets.only(top: 50.0, right: 20.0, left: 20.0),
@@ -77,12 +108,12 @@ class VodafoneCash extends StatelessWidget {
                       fontWeight: FontWeight.w700),
                 ),
 
-                SizedBox(height: 60),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     SizedBox(width: 20),
                     Text(
-                      "01141830480",
+                      "01025690635",
                       style: TextStyle(
                           color: Colors.grey,
                           fontSize: 19,
@@ -96,7 +127,7 @@ class VodafoneCash extends StatelessWidget {
                             width: 90,
                             child: Image.asset('assets/images/copy.jpg')),
                         onTap: () {
-                          FlutterClipboard.copy("01141830480")
+                          FlutterClipboard.copy("01025690635")
                               .then((value) => print('copied'));
                           Get.snackbar(
                             'Done',
@@ -109,29 +140,36 @@ class VodafoneCash extends StatelessWidget {
                 ),
 
                 SizedBox(height: 20),
-                TextFormField(
-                  controller: nameController,
-                  decoration: InputDecoration(
-                    hintText: "3".tr,
-                    hintStyle: TextStyle(color: Colors.grey),
-                    fillColor: Colors.white,
-                  ),
-                  onSaved: (value) {
-                    nameController != value;
-                  },
-                ),
+                // TextFormField(
+                //   controller: nameController,
+                //   decoration: InputDecoration(
+                //     hintText: "3".tr,
+                //     hintStyle: TextStyle(color: Colors.grey),
+                //     fillColor: Colors.white,
+                //   ),
+                //   onSaved: (value) {
+                //     nameController != value;
+                //   },
+                // ),
                 SizedBox(height: 20),
                 SizedBox(width: 20),
                 TextFormField(
                   controller: numController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     hintText: "43".tr,
                     hintStyle: TextStyle(color: Colors.grey),
                     fillColor: Colors.white,
                   ),
-                  onSaved: (value) {
-                    numController != value;
+                  maxLength: 11,
+                  onChanged: (value) => _checkWalletNum(value),
+                  validator: (val) {
+                    if (!VodafoneCash.isEgyptianPhoneNumber(val??"")) {
+                  return "58".tr;
+                }
+                return null;
                   },
+
                 ),
 
                 SizedBox(height: 20),
@@ -144,9 +182,32 @@ class VodafoneCash extends StatelessWidget {
                     ),
                   ),
                 ),
-
+                SizedBox(height: 20),
+                Container(
+                          //   alignment: Alignment.center,
+                          width: 180,
+                          height: 60,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromARGB(255, 29, 116, 27),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15)),
+                              ),
+                              
+                              child: Text(
+                                "59".tr,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: "Reboto"),
+                              ),
+                              onPressed: () async {
+            launcherWhatsapp('+201025690635', 'I want active course'); // }
+          },
+          )),
                 SizedBox(
-                  height: 120,
+                  height: 50,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
@@ -163,7 +224,7 @@ class VodafoneCash extends StatelessWidget {
                             height: 10,
                           ),
                           Custom_Text(
-                            text: price,
+                            text: widget.total.toString(),
                             fontSize: 20,
                             color: Color.fromARGB(255, 116, 27, 27),
                           ),
@@ -175,10 +236,11 @@ class VodafoneCash extends StatelessWidget {
                           height: 60,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color.fromARGB(255, 116, 27, 27),
+                                backgroundColor:enableBTN? Color.fromARGB(255, 116, 27, 27):Colors.grey,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15)),
                               ),
+                              
                               child: Text(
                                 "38".tr,
                                 style: TextStyle(
@@ -190,19 +252,18 @@ class VodafoneCash extends StatelessWidget {
                               onPressed: () async {
                                 _formKey.currentState!.save();
                                 if (_formKey.currentState!.validate()) {
-                                  coursex.add(doctorname);
 
                                   await FirebaseFirestore.instance
-                                      .collection('pay')
+                                      .collection('payment requests')
                                       .add({
-                                    "course": course,
-                                    "studentname": nameController.text,
-                                    "doctorname": doctorname,
-                                    "studentemail": email,
-                                    "total": price,
-                                    "walletnumber": numController.text,
-                                    "courex": coursex.toString(),
-                                    "image": image.toString()
+                                    "coursID": widget.courseModel.id,
+                                    "date": DateTime.now(),
+                                    "email": widget.email,
+                                    "wallet": numController.text,
+                                    "price": widget.courseModel.price,
+                                    "discount": widget.discount,
+                                    "total": widget.total,
+                                    "promocode": widget.promoCodeModel?.name??null,
                                   }).then((value) {
                                     Get.snackbar("Done", "sent".tr,
                                         colorText: Colors.white,
@@ -258,29 +319,37 @@ class VodafoneCash extends StatelessWidget {
                 // ),
                 //    _listViewCodes(),
                 //  SizedBox(height: 15),
+                
               ]),
+              
             )),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 230),
-        child: FloatingActionButton(
-          child: Icon(
-            Icons.contact_support,
-            color: Colors.black,
-          ),
-          backgroundColor: Colors.white,
-          onPressed: () async {
-            launcherWhatsapp('+201141830480', 'I want active course'); // }
-          },
-        ),
-      ),
+      
     );
   }
 
   void launcherWhatsapp(@required phone, @required msg) async {
     String url = 'whatsapp://send?phone=$phone&text=$msg';
-    await canLaunch(url) ? launch(url) : launch(url);
+    try{
+      await canLaunch(url) ? launch(url) : launch(url);
+
+    }catch(e){
+      print("Error in launcherWhatsapp");
+    }
   }
+  
+  _checkWalletNum(String value) {
+    if (VodafoneCash.isEgyptianPhoneNumber(value)) {
+      setState(() {
+        enableBTN = true;
+      });
+    } else {
+      setState(() {
+        enableBTN = false;
+      });
+    }
+  }
+  
 }
 
 

@@ -42,24 +42,24 @@ class _PayScreenState extends State<PayScreen> {
     String e = box.read('email');
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFDAEFE8),
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.grey,
-        toolbarHeight: 1,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(0),
-                bottomRight: Radius.circular(0)),
-            gradient: LinearGradient(
-              colors: [Colors.red, Colors.blue],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+          toolbarHeight: 50,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(0)),
+              gradient: LinearGradient(
+                colors: [Colors.red, Colors.blue],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
           ),
         ),
-      ),
       body: Container(
         child: isfetching
             ? Center(child: Text("Loading .."))
@@ -68,9 +68,6 @@ class _PayScreenState extends State<PayScreen> {
                   //mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 40,
-                    ),
                     Container(
                       height: 180,
                       child: Stack(
@@ -178,15 +175,17 @@ class _PayScreenState extends State<PayScreen> {
                           backgroundColor: Color.fromARGB(255, 116, 27, 27),
                         ),
                         onPressed: () async {
-                          Get.to(VodafoneCash(
+                          if(widget.courseModel.price != null && total != 0)
+                          {
+                            
+                            Get.to(VodafoneCash(
                             email: e,
-                            price: widget.courseModel.price.toString(),
-                            course: widget.courseModel.name.toString(),
-                            image: widget.courseModel.image.toString(),
-                            doctorname:
-                                widget.courseModel.doctorname.toString(),
-                            coursex: [],
+                            courseModel: widget.courseModel,
+                            total: total!,
+                            promoCodeModel: promoCodeModel,
+                            discount:promoCodeModel!=null? _getDiscount(widget.courseModel.price!,promoCodeModel!.percent!):null,
                           ));
+                          }
 
                           // final CollectionReference _updates =
                           // FirebaseFirestore.instance.collection('user');
@@ -302,10 +301,10 @@ class _PayScreenState extends State<PayScreen> {
   }
 
   _PromoCodeForm() {
-    return Form(
-      key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal:20.0),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Form(
+        key: _formKey,
           child: Column(
             children: [
               Row(
@@ -362,8 +361,8 @@ class _PayScreenState extends State<PayScreen> {
                 ),
                 Row(children: [Visibility(visible: wrongPromo,child: Text("51".tr,style: TextStyle(color: Colors.red,fontSize: 15),))],)
             ],
-          ),
-        ));
+          )),
+    );
   }
 
   Future<void> _applyPromoCode(BuildContext context, String value) async {

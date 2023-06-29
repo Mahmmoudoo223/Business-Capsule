@@ -48,7 +48,7 @@ class MyLocal implements Translations {
           "36": "انشاء حساب",
           "37": "الاجمالي",
           "38": "تفعيـل الكـورس",
-          "39": "لا تضغط على التفعيل حتى ترسل المجموع إلى رقم فودافون كاش",
+          "39": "أخيرًا بعد إرسال المبلغ الإجمالي إلى فودافون كاش وإدخال رقم محفظتك ، اضغط على زر التفعيل لتفعيل الدورة في غضون ساعات قليلة ، أو إذا كنت ترغب في تفعيلها على الفور ، يرجى التواصل معنا عبر الواتساب ",
           "40": "رقم فودافون كاش الخاص بنا",
           "41": "ارسل الاجمالي لرقم فودافون كاش",
           "42": "ادفع باستخدام فودافون كاش",
@@ -67,6 +67,8 @@ class MyLocal implements Translations {
           "55": "الخصم",
           "56": " جنيه",
           "57": "تفعيل",
+          "58": "رقم المحفظة غير صحيح",
+          "59": "الواتساب",
         },
         "en": {
           "1": "Hello,",
@@ -108,7 +110,7 @@ class MyLocal implements Translations {
           "37": " Total ",
           "38": "activate course",
           "39":
-              "don't press the button until you send total to vodafone cash number",
+              "Finally after sending the total ammount to our Vodafone Cash and entering your wallete number press the activate button in order to activate the course in few hours, or if you want to activate it immedetly please contact us on WhatsApp",
           "40": "Our Vodafone Cash Number",
           "41": "Send the total number to Vodafone Cash",
           "42": "Pay With vodafone cash",
@@ -127,6 +129,8 @@ class MyLocal implements Translations {
           "55": "Discount",
           "56": " L.E",
           "57": "Apply",
+          "58": "Wrong Wallet Number",
+          "59": "WhatsApp",
         },
       };
 }
