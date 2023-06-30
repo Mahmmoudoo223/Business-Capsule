@@ -69,6 +69,8 @@ class MyLocal implements Translations {
           "57": "تفعيل",
           "58": "رقم المحفظة غير صحيح",
           "59": "الواتساب",
+          "60": "حول هذه الدورة",
+          "61": "الوصف",
         },
         "en": {
           "1": "Hello,",
@@ -98,7 +100,7 @@ class MyLocal implements Translations {
           "25": "Log out",
           "26": "Home",
           "27": "Favourite",
-          "28": "my courses",
+          "28": "My Courses",
           "29": "Profile",
           "30": "Choose Language",
           "31": "Arabic",
@@ -131,6 +133,8 @@ class MyLocal implements Translations {
           "57": "Apply",
           "58": "Wrong Wallet Number",
           "59": "WhatsApp",
+          "60": "About this course",
+          "61": "Description",
         },
       };
 }

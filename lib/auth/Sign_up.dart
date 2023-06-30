@@ -20,10 +20,10 @@ class SignUpScreen extends GetWidget<AuthViewModel> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.grey,
+        backgroundColor:  Color(0xFFDAEFE8),
         toolbarHeight: 1,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor:  Color(0xFFDAEFE8),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
@@ -37,8 +37,8 @@ class SignUpScreen extends GetWidget<AuthViewModel> {
                   children: [
                     Container(
                       child: Image.asset(
-                        "assets/images/life course.jpg",
-                        width: 220,
+                        "assets/images/final caps.png",
+                        width: double.infinity,
                         height: 220,
                         fit: BoxFit.cover,
                       ),

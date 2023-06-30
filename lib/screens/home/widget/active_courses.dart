@@ -3,6 +3,7 @@ import 'package:course_app/constants/colors.dart';
 import 'package:course_app/models/course_model.dart';
 import 'package:course_app/models/enrolled_courses_list.dart';
 import 'package:course_app/models/home_view_model.dart';
+import 'package:course_app/screens/courses/data_about_course.dart';
 import 'package:course_app/screens/home/widget/category_titel.dart';
 import 'package:course_app/screens/home/widget/levels_slider.dart';
 import 'package:course_app/screens/courses/material.dart';
@@ -34,10 +35,11 @@ class ActiveCourses extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return Container(
-                        width: MediaQuery.of(context).size.width * .4,
+                        width: MediaQuery.of(context).size.width * .5,
                         child: Column(
                           children: [
                             Container(
+                              width: MediaQuery.of(context).size.width * .5,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: NetworkImage(
@@ -57,8 +59,15 @@ class ActiveCourses extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width * .4,
                                   child: InkWell(
                                     onTap: () {
-                                          Get.to(MaterialScreen(
+                                      if(EnrolledCourses.list.contains(controller.categoriesModel[index].id))
+                                      {
+                                            Get.to(MaterialScreen(
                                           courseModel: controller.categoriesModel[index],));
+                                      }else{
+                                        Get.to(DataCourseScreen(
+                                          courseModel: controller.categoriesModel[index],));
+
+                                      }
                                       // Get.to
                                       //   (
                                       //     WaitingScreen(
@@ -141,10 +150,11 @@ class ActiveCourses extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return InkWell(
                         child: Container(
-                          width: MediaQuery.of(context).size.width * .4,
+                          width: MediaQuery.of(context).size.width * .5,
                           child: Column(
                             children: [
                               Container(
+                                width: MediaQuery.of(context).size.width * .5,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: NetworkImage(
@@ -206,8 +216,14 @@ class ActiveCourses extends StatelessWidget {
                           ),
                         ),
                         onTap: () async{
-                          Get.to(MaterialScreen(
+                          if(EnrolledCourses.list.contains(controller.bestCourseModel[index].id))
+                          {
+                            Get.to(MaterialScreen(
                                           courseModel: controller.bestCourseModel[index],));
+                          }else{
+                            Get.to(DataCourseScreen(
+                                          courseModel: controller.bestCourseModel[index],));
+                          }
                           // Get.to
                           //   (
                           //     WaitingScreen(

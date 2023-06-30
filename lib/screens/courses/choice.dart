@@ -20,7 +20,7 @@ class ChoiceScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        toolbarHeight: 1,
+        //toolbarHeight: 15,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
@@ -73,35 +73,35 @@ class ChoiceScreen extends StatelessWidget {
             SizedBox(
               height: 60,
             ),
-            InkWell(
-              child: AnimatedContainer(
-                width: 300,
-                height: 55,
-                duration: Duration(milliseconds: 200),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(colors: [Colors.red, Colors.blue]),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '18'.tr,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-              ),
-              onTap: () {
-                Get.to(CoursesViewScreen(
-                  cat: 'ar',
-                  level: level,
-                ));
-              },
-            ),
+            // InkWell(
+            //   child: AnimatedContainer(
+            //     width: 300,
+            //     height: 55,
+            //     duration: Duration(milliseconds: 200),
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(10),
+            //       gradient: LinearGradient(colors: [Colors.red, Colors.blue]),
+            //     ),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Text(
+            //           '18'.tr,
+            //           style: TextStyle(
+            //               color: Colors.white,
+            //               fontSize: 22,
+            //               fontWeight: FontWeight.bold),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Get.to(CoursesViewScreen(
+            //       cat: 'ar',
+            //       level: level,
+            //     ));
+            //   },
+            // ),
             SizedBox(
               height: 20,
             ),

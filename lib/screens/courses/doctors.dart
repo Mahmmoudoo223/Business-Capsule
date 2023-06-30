@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_app/models/course_model.dart';
 import 'package:course_app/resources/color_manager.dart';
+import 'package:course_app/screens/courses/data_about_course.dart';
 import 'package:course_app/screens/courses/material.dart';
 import 'package:course_app/screens/pay/pay_screen.dart';
 import 'package:course_app/screens/pay/waiting%20screen.dart';
@@ -23,7 +24,7 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
     return Scaffold(
         backgroundColor: Color(0xFFDAEFE8),
         appBar: AppBar(
-          toolbarHeight: 50,
+          //toolbarHeight: 50,
           elevation: 0,
           backgroundColor: Colors.transparent,
           flexibleSpace: Container(
@@ -76,8 +77,10 @@ class _PostsScreenState extends State<DoctorsViewScreen> {
                                       left: 20, right: 12),
                                   child: InkWell(
                                     onTap: () {
-                                      Get.to(MaterialScreen(
-                                          courseModel: currentCourse,));
+                                      // Get.to(MaterialScreen(
+                                      //     courseModel: currentCourse,));
+                                      Get.to(DataCourseScreen(
+                                          courseModel:currentCourse ));
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

@@ -10,6 +10,8 @@ class CourseModel {
   String? image;
   double? price;
   String? level;
+  String? description;
+  String? about;
 
    CourseModel({
      this.id,
@@ -20,7 +22,9 @@ class CourseModel {
      this.name,
      this.image,
      this.price,
-     this.level
+     this.level,
+     this.description,
+     this.about
   });
 
   CourseModel copyWith({
@@ -32,7 +36,9 @@ class CourseModel {
     bool? isMostSelling,
     String? lang,
     double?price,
-    String? level
+    String? level,
+    String? description,
+    String? about
   }) {
     return CourseModel(
       id: id ?? this.id,
@@ -44,6 +50,8 @@ class CourseModel {
       lang: lang ?? this.lang,
       price: price ?? this.price,
       level: level ?? this.level,
+      description: description ?? this.description,
+      about: about ?? this.about,
     );
   }
 
@@ -59,6 +67,8 @@ class CourseModel {
       lang: data['lang'],
       name: data['name'],
       level: data['level'],
+      description: data['description'],
+      about: data['about'],
       price: double.tryParse(data['price']),
     );
   }
@@ -73,7 +83,9 @@ class CourseModel {
       'lang': lang,
       'name': name,
       'price': price,
-      'level': level,      
+      'level': level, 
+      'description': description,  
+      'about': about,    
     };
   }
 

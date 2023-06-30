@@ -39,8 +39,16 @@ class _PdfWidgetState extends State<PdfWidget> {
             case ConnectionState.waiting:
               return new Text('Loading...');
             default:
-              return snapshot.data!.docs.length>0 ?
-              Column(children: snapshot.data!.docs.map((e) {
+              var res = snapshot.data!.docs;
+              if(res.length>=2)
+              {try{
+                res.sort((a, b) => a["order"].compareTo(b["order"]));
+              }catch(e){
+                print("Sorting Error");
+              }
+              }
+              return res.length>0 ?
+              Column(children: res.map((e) {
                  return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(

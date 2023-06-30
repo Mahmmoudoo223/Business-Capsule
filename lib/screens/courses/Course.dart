@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_app/models/course_model.dart';
 import 'package:course_app/models/enrolled_courses_list.dart';
 import 'package:course_app/resources/color_manager.dart';
+import 'package:course_app/screens/courses/data_about_course.dart';
 import 'package:course_app/screens/courses/material.dart';
 import 'package:course_app/screens/home/my_courses.dart';
 import 'package:course_app/screens/home/widget/Bottom_bar.dart';
@@ -44,45 +45,48 @@ class _PostsScreenState extends State<MyCoursesScreen> {
         //   ),
         //   centerTitle: true,
         // ),
+        appBar: AppBar(
+          toolbarHeight: 50,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(0)),
+              gradient: LinearGradient(
+                colors: [Colors.red, Colors.blue],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+          centerTitle: true,
+          title: Text(
+            "28".tr,
+            style: TextStyle(
+                fontSize: 20,
+                color: ColorManager.white,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
         body: Container(
             color: Color(0xFFDAEFE8),
             child: Column(children: [
               SizedBox(height: 30),
               Flexible(
-                  child:isfetching?Center(child: Text('Loading')):EnrolledCourses.list.isNotEmpty?
-                  StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection('Corssess')
-                          .where('id', whereIn: EnrolledCourses.list)
-                          .snapshots(),
-                      builder:
-                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (!snapshot.hasData)
-                          return Center(child: Text('Loading'));
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                          case ConnectionState.waiting:
-                            return new Text('Loading...');
-                          default:
-                            if (snapshot.data!.docs.length == 0)
-                              return EmptyList();
-
-                            return ListView.builder(
-                              itemCount: snapshot.data!.docs.length,
+                  child:isfetching?Center(child: Text('Loading')):myCourses.isNotEmpty?
+                  ListView.builder(
+                              itemCount: myCourses.length,
                               itemBuilder: (BuildContext context, int index) {
-                                DocumentSnapshot posts =
-                                    snapshot.data!.docs[index];
+                                CourseModel currentCourse = myCourses[index];
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20, right: 12),
                                   child: InkWell(
                                     onTap: () {
                                       Get.to(MaterialScreen(
-                                          courseModel: CourseModel.fromFirestore(posts)));
-
-                                      // Get.to(MaterialScreen(
-                                      //     doctor: posts["name"],
-                                      //     cat: posts["course"]));
+                                          courseModel:currentCourse ));
                                     },
                                     child: Container(
                                       height: 180,
@@ -132,7 +136,7 @@ class _PostsScreenState extends State<MyCoursesScreen> {
                                                     image: DecorationImage(
                                                         fit: BoxFit.fill,
                                                         image: NetworkImage(
-                                                            posts['image']))),
+                                                            currentCourse.image??""))),
                                               ),
                                             ),
                                           ),
@@ -144,14 +148,14 @@ class _PostsScreenState extends State<MyCoursesScreen> {
                                                 width: 180,
                                                 child: Column(children: [
                                                   Custom_Text(
-                                                    text: posts['name'],
+                                                    text: currentCourse.name??"Unkown",
                                                     fontSize: 18,
                                                   ),
                                                   Divider(
                                                     color: Colors.black,
                                                   ),
                                                   Custom_Text(
-                                                    text: posts['doctorname'],
+                                                    text: currentCourse.doctorname??"Unkown",
                                                     fontSize: 18,
                                                     color: Colors.grey,
                                                   ),
@@ -176,110 +180,127 @@ class _PostsScreenState extends State<MyCoursesScreen> {
                               //     (BuildContext context, int index) => SizedBox(
                               //   height: 20,
                               // ),
-                            );
-                        }
-                      }):EmptyList())
+                            ):EmptyList()
+                  
+                  )
             ])));
   }
   
-  Future<void> getMyCourses() async{
+  Future<void> getMyCourses() async {
     try {
-      if(EnrolledCourses.list.isNotEmpty){
-        setState(() {
-        isfetching=true;
+      setState(() {
+        isfetching = true;
       });
-      List<CourseModel> res = [];
-      EnrolledCourses.list.forEach((element) async{
-        if(element.isNotEmpty){
-          DocumentSnapshot courseDoc =
-          await FirebaseFirestore.instance.collection('Corssess').doc(element).get();
-
-      // parse the user document into a UserModel object
-        CourseModel courseModel = CourseModel.fromFirestore(courseDoc);
-        res.add(courseModel);
-        }
-
-      });
+      final box = GetStorage();
+      String e = box.read('email') ?? "x";
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('subscriptions')
+          .where("email", isEqualTo: e).where("active",isEqualTo: true).get();
+      List<CourseModel> res = await addMyCourses(querySnapshot);
+      print("Enrolled ============== " + res.length.toString());
+      print("Enrolled lllllllll ============== " + EnrolledCourses.list.length.toString());
       setState(() {
         myCourses = res;
-        isfetching=false;
+        isfetching = false;
       });
-      }
     } catch (e) {
       setState(() {
-        isfetching=false;
+        isfetching = false;
       });
       print('Error getting subscriptions from Firestore: $e');
       //rethrow;
+    }
+  }
+  
+  Future<List<CourseModel>> addMyCourses(QuerySnapshot<Object?> querySnapshot) async{
+    try{
+      List<CourseModel> res =[];
+      for (int i = 0; i < querySnapshot.docs.length; i++){
+        if(querySnapshot.docs[i]["courseID"] != null){
+        EnrolledCourses.addCourse(querySnapshot.docs[i]["courseID"].toString().trim());
+        DocumentSnapshot courseDoc = await FirebaseFirestore.instance
+            .collection('Corssess')
+            .doc(querySnapshot.docs[i]["courseID"].toString().trim())
+            .get();
+        CourseModel courseModel = CourseModel.fromFirestore(courseDoc);
+        print(courseModel.toString());
+        res.add(courseModel);
+        print(res.toString());
+        }
+      }
+      return res;
+    }catch(e){
+      print("Error in Getting MyCourses");
+      return [];
     }
   }
 }
 
 Widget EmptyList() {
    return Container(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Center(
-                                      child: Image.asset(
-                                        "assets/images/no page .png",
-                                        height: 300,
-                                        width: 500,
-                                      ),
-                                    ),
-                                    // Text(
-                                    //   "33".tr,
-                                    //   style: TextStyle(
-                                    //       fontSize: 30,
-                                    //       color: Colors.indigo[900],
-                                    //       fontWeight: FontWeight.bold),
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 10,
-                                    // ),
-                                    // Text(
-                                    //   "49".tr,
-                                    //   style: TextStyle(
-                                    //       fontSize: 18,
-                                    //       color: Colors.grey,
-                                    //       fontWeight: FontWeight.bold),
-                                    // ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    // Padding(
-                                    //   padding: const EdgeInsets.symmetric(
-                                    //       horizontal: 40),
-                                    //   child: InkWell(
-                                    //     onTap: () {
-                                    //       Get.to(BottomBar());
-                                    //     },
-                                    //     child: Container(
-                                    //       alignment: Alignment.center,
-                                    //       height: 55,
-                                    //       decoration: BoxDecoration(
-                                    //           color: Color.fromARGB(
-                                    //               255, 187, 186, 186),
-                                    //           borderRadius:
-                                    //               BorderRadius.circular(15),
-                                    //           boxShadow: [
-                                    //             BoxShadow(
-                                    //               color: Colors.black
-                                    //                   .withOpacity(0.1),
-                                    //               blurRadius: 10,
-                                    //             ),
-                                    //           ]),
-                                    //       child: Text(
-                                    //         "34".tr,
-                                    //         style: TextStyle(
-                                    //             color: Colors.white,
-                                    //             fontWeight: FontWeight.w700,
-                                    //             fontSize: 20),
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                              );
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Image.asset(
+            "assets/images/no page .png",
+            height: 300,
+            width: 500,
+          ),
+        ),
+        // Text(
+        //   "33".tr,
+        //   style: TextStyle(
+        //       fontSize: 30,
+        //       color: Colors.indigo[900],
+        //       fontWeight: FontWeight.bold),
+        // ),
+        // SizedBox(
+        //   height: 10,
+        // ),
+        // Text(
+        //   "49".tr,
+        //   style: TextStyle(
+        //       fontSize: 18,
+        //       color: Colors.grey,
+        //       fontWeight: FontWeight.bold),
+        // ),
+        SizedBox(
+          height: 30,
+        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(
+        //       horizontal: 40),
+        //   child: InkWell(
+        //     onTap: () {
+        //       Get.to(BottomBar());
+        //     },
+        //     child: Container(
+        //       alignment: Alignment.center,
+        //       height: 55,
+        //       decoration: BoxDecoration(
+        //           color: Color.fromARGB(
+        //               255, 187, 186, 186),
+        //           borderRadius:
+        //               BorderRadius.circular(15),
+        //           boxShadow: [
+        //             BoxShadow(
+        //               color: Colors.black
+        //                   .withOpacity(0.1),
+        //               blurRadius: 10,
+        //             ),
+        //           ]),
+        //       child: Text(
+        //         "34".tr,
+        //         style: TextStyle(
+        //             color: Colors.white,
+        //             fontWeight: FontWeight.w700,
+        //             fontSize: 20),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+      ],
+    ),
+  );
 }

@@ -21,7 +21,7 @@ class _PostsScreenState extends State<CoursesViewScreen> {
         backgroundColor: Color(0xFFDAEFE8),
         appBar: AppBar(
           centerTitle: true,
-          toolbarHeight: 50,
+          //toolbarHeight: 50,
           elevation: 0,
           backgroundColor: Colors.transparent,
           flexibleSpace: Container(
