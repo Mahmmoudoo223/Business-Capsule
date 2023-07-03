@@ -54,7 +54,7 @@ class _SearchInputState extends State<SearchInput> {
   List _resultList = [];
   getCorssessStream() async {
     var data = await FirebaseFirestore.instance
-        .collection("courses")
+        .collection("Corssess")
         .orderBy("name")
         .get();
 

@@ -2,10 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_app/models/course_model.dart';
 import 'package:course_app/models/enrolled_courses_list.dart';
 import 'package:course_app/screens/pdfs/pdfs_widget.dart';
+import 'package:course_app/screens/quiz/quiz_screen.dart';
+import 'package:course_app/screens/quiz/quiz_widget.dart';
 import 'package:course_app/screens/videos/videos_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/get_core.dart';
 
 class SectionWidget extends StatelessWidget {
   CourseModel courseModel;
@@ -43,7 +47,9 @@ class SectionWidget extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Text(e["name"]??"",style: TextStyle(fontSize: 18,color: Colors.black),),
             ),
-            type == SectionType.video? VideoWidget(sectionID: e.id,haveSubscription: haveSubscription,courseModel: courseModel,):PdfWidget(sectionID: e.id,haveSubscription: haveSubscription,courseModel: courseModel,),
+            type == SectionType.video? VideoWidget(sectionID: e.id,haveSubscription: haveSubscription,courseModel: courseModel,)
+            :type == SectionType.pdf?PdfWidget(sectionID: e.id,haveSubscription: haveSubscription,courseModel: courseModel,)
+            :QuizWidget(sectionID: e.id,haveSubscription: haveSubscription,courseModel: courseModel,),
             Divider(color: Colors.grey,)
           ],
         );
@@ -54,4 +60,4 @@ class SectionWidget extends StatelessWidget {
 
   }
 }
-enum SectionType{video,pdf}
+enum SectionType{video,pdf,quiz}

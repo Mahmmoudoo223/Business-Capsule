@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_app/screens/home/widget/Bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -7,18 +8,35 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:get/get.dart';
 
-class AdsScreen extends StatelessWidget {
+class AdsScreen extends StatefulWidget {
   const AdsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AdsScreen> createState() => _AdsScreenState();
+}
+
+class _AdsScreenState extends State<AdsScreen> {
+  bool isfetching = true;
+  String? description,promoCode,title,image;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAds();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: Stack(
+          backgroundColor:isfetching? Color(0xFFDAEFE8):Colors.white,
+      body:isfetching?Center(child: Text("Loading")): Stack(
         children: [
           SizedBox(
             width: double.infinity,
-            child: Image.network(
+            child: Image.network(image??
                 "https://img.freepik.com/free-vector/special-offer-creative-sale-banner-design_1017-16284.jpg?1"),
           ),
           buttonArrow(context),
@@ -96,7 +114,7 @@ class AdsScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Head offer",
+                    title??"Offer",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 24,
@@ -115,7 +133,7 @@ class AdsScreen extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    'Description offer',
+                    description??"",
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: 18,
@@ -138,7 +156,7 @@ class AdsScreen extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    'PromoCode',
+                    promoCode??"",
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: 18,
@@ -186,5 +204,34 @@ class AdsScreen extends StatelessWidget {
             ),
           );
         });
+  }
+  
+  void getAds()async{
+    try{
+          setState(() {
+      isfetching = true;
+    });
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('ads')
+          .where("active", isEqualTo: true).get();
+    if(querySnapshot.docs.isEmpty){
+      Get.off(BottomBar());
+    }
+    Map data = querySnapshot.docs[0].data() as Map<String, dynamic>;
+    //print("_questionList ============== " + _questionList.length.toString());
+    setState(() {
+      description = data["description"]!=null?data["description"]:null;
+      image =data["image"]!=null? data["image"]:null;
+      promoCode = data["code"]!=null?data["code"]:null;
+      title = data["title"]!=null?data["title"]:null;
+      isfetching = false;
+    });
+    }catch(e){
+      print("_questionList ============== EEErrrooorrr");
+      setState(() {
+      isfetching = false;
+    });
+
+    }
   }
 }

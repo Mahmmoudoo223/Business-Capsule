@@ -35,7 +35,7 @@ class MaterialScreen extends GetWidget<MaterialViewModel> {
           children: [
             Container(
               padding: EdgeInsets.only(top: 50, left: 30, right: 30),
-              width: MediaQuery.of(context).size.width,
+              width: double.infinity,
               height: 300,
               child: Column(children: [
                 Row(
@@ -83,10 +83,10 @@ class MaterialScreen extends GetWidget<MaterialViewModel> {
                         child: Center(
                       child: ToggleSwitch(
                         initialLabelIndex: controller.activeToggledIndex.value,
-                        totalSwitches: 2,
+                        totalSwitches: 3,
                         inactiveBgColor: Color.fromARGB(255, 116, 27, 27),
-                        minWidth: 145.0,
-                        minHeight: 60.0,
+                        minWidth: MediaQuery.of(context).size.width * 0.25,
+                        minHeight: MediaQuery.of(context).size.height* 0.08,
                         activeFgColor: ColorManager.white,
                         inactiveFgColor: Colors.white54,
                         activeBgColor: [Colors.white10],
@@ -94,6 +94,7 @@ class MaterialScreen extends GetWidget<MaterialViewModel> {
                         labels: [
                           AppStrings.pdf,
                           AppStrings.videos,
+                          AppStrings.quizzes,
                         ],
                         onToggle: (index) {
                           print("index=" + index.toString());
@@ -120,7 +121,9 @@ class MaterialScreen extends GetWidget<MaterialViewModel> {
                   if (controller.activeToggledIndex == 0)
                     SectionWidget(courseModel: courseModel,type: SectionType.pdf),
                   if (controller.activeToggledIndex == 1)
-                    SectionWidget(courseModel: courseModel,type: SectionType.video)
+                    SectionWidget(courseModel: courseModel,type: SectionType.video),
+                  if (controller.activeToggledIndex == 2)
+                    SectionWidget(courseModel: courseModel,type: SectionType.quiz)
                 ]),
               ),
             )),

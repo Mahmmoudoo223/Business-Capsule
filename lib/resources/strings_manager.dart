@@ -8,7 +8,7 @@ class AppStrings {
   static const splashText= "mono";
   static const pdf= "Pdfs";
   static const videos= "Videos";
-
+  static const quizzes= "Quizzes";
   static const onBoardingText1= "Find your service";
   static const onBoardingText2= "Lorem Ipsum is simply dummy text of the printing";
   static const onBoardingText3= "Apply your service with us !";
