@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:course_app/resources/color_manager.dart';
-import 'package:course_app/screens/videos/watermark_widget.dart';
+import 'dart:math';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,7 +13,6 @@ class VideoScreen extends StatefulWidget {
   State<VideoScreen> createState() => _VideoDetailsState();
 }
 class _VideoDetailsState extends State<VideoScreen> {
-  OverlayEntry? _overlayEntry;
   late String url;
   late YoutubePlayerController controller;
   String? email;
@@ -33,7 +32,7 @@ class _VideoDetailsState extends State<VideoScreen> {
       ),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
-    addWatermark(context,email??"",columnCount: 1,rowCount: 1);
+    //addWatermark(context,email??"",columnCount: 1,rowCount: 1);
   });
     
   }
@@ -48,61 +47,66 @@ class _VideoDetailsState extends State<VideoScreen> {
   void dispose() {
     super.dispose();
     controller.dispose();
-    _overlayEntry?.remove();
   }
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayerBuilder(
-      builder: (context,player)=>
-
-   Scaffold(
-     appBar: AppBar(
+    return Scaffold(
+        appBar: AppBar(
        elevation: 0,
        backgroundColor:Color.fromARGB(255, 116, 27, 27),
        toolbarHeight: 1,
      ),
-         body:Column(
-          children: [
+     body: Stack(
+      children: [
+        YoutubePlayerBuilder(
+    player: YoutubePlayer(
+        controller: controller,
+    ),
+    builder: (context, player){
+        return Column(
+            children: [
             Container(
-                height:380,
+                height:MediaQuery.of(context).size.height*.5,
                 child: player),
 
           ],
+        );}
+    ),
+    IgnorePointer(
+      child: Container(
+        //color: Colors.green,
+        height:MediaQuery.of(context).orientation == Orientation.portrait? MediaQuery.of(context).size.height*.5:MediaQuery.of(context).size.height,
+        width:MediaQuery.of(context).size.width,
+        child: Center(
+          child: Transform.rotate(
+            angle: -pi / 10.0,
+            child: Row( mainAxisAlignment: MainAxisAlignment.center,
+             children: <Widget>[
+               Expanded( // Constrains AutoSizeText to the width of the Row
+                           child: AutoSizeText.rich(
+                          TextSpan(
+               text: email,
+               style: TextStyle(fontSize: 200, color: Color(0x20000000),),
+                          ),
+                          minFontSize: 0,
+                          maxFontSize: 2,
+                          maxLines: 1,
+                          stepGranularity: 0.1,
+                          textAlign: TextAlign.center,
+                        )
+               ),
+             ],
+                   ),
+          ),
         ),
+      ),
+    )
+    
+      ],
      ),
-      player:
-      YoutubePlayer(
-
-        controller: controller,
-
-        showVideoProgressIndicator: true,
-
-        liveUIColor: Colors.amber,
-        // bottomActions: [
-        //   CurrentPosition(),
-        //   ProgressBar(isExpanded: true),
-        //   //     TotalDuration(),
-        // ],
-
-      ));
+    );
   
     
   }
-
-  void addWatermark(BuildContext context, String watermark,
-    {int rowCount = 3, int columnCount = 10}) async {
-  if (_overlayEntry != null) {
-    _overlayEntry!.remove();
-  }
-  OverlayState overlayState = Overlay.of(context);
-  _overlayEntry = OverlayEntry(
-      builder: (context) => Watarmark(
-            rowCount: rowCount,
-            columnCount: columnCount,
-            text: watermark,
-          ));
-  overlayState.insert(_overlayEntry!);
-  // return await _methodChannel.invokeMethod<void>("addWatermark", ['I am a watermark']);
-}
 }
